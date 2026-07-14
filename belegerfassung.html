@@ -161,6 +161,20 @@
     background: #fff;
   }
   textarea { resize: vertical; min-height: 44px; }
+
+  /* iOS Safari: date-Inputs brauchen appearance-Reset, sonst sprengen sie die Feldbreite */
+  input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 40px;
+    text-align: left;
+  }
+  input[type="date"]::-webkit-date-and-time-value {
+    text-align: left;
+    margin: 0;
+  }
   .num { text-align: right; }
   .check-field {
     flex-direction: row;
@@ -563,4 +577,3 @@ addBeleg();
 </body>
 </html>
 
-</html>
