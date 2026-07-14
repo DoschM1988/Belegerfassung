@@ -7,24 +7,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ============ Grundgerüst ============ */
   :root {
-    --green: #83B735;
-    --green-dark: #2F5D2F;
-    --cream: #FCFAF5;
-    --line: #E3E0D6;
-    --text: #263427;
-    --muted: #7A8577;
+    --green: #65b32e;        /* MR-Grün */
+    --green-dark: #4a8a1f;
+    --bg: #f6f8f4;
+    --line: #dfe4da;
+    --text: #26302a;
+    --muted: #77827a;
+    --danger: #B94A3B;
+    --radius: 14px;
   }
   * { box-sizing: border-box; }
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, Segoe UI, Arial, sans-serif;
-    background: var(--cream);
+    font-family: 'Plus Jakarta Sans', -apple-system, 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
     margin: 0;
     padding: 28px 16px;
     color: var(--text);
   }
   .wrap { max-width: 1180px; margin: 0 auto; }
 
+  /* ============ Kopf ============ */
   .head {
     display: flex;
     align-items: center;
@@ -33,21 +37,25 @@
     gap: 14px;
     margin-bottom: 22px;
   }
-  .head h1 {
-    font-size: 22px;
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { height: 44px; width: auto; display: block; }
+  .brand h1 {
+    font-size: 21px;
     font-weight: 800;
-    color: var(--green-dark);
     margin: 0;
     letter-spacing: -0.01em;
   }
-  .head span {
+  .brand h1 span {
     display: block;
     font-size: 12.5px;
     font-weight: 500;
     color: var(--muted);
     margin-top: 2px;
+    letter-spacing: 0;
   }
-  .toolbar { display: flex; gap: 10px; }
+
+  /* ============ Buttons & Toolbar ============ */
+  .toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   button {
     font-family: inherit;
     border: none;
@@ -56,22 +64,39 @@
     font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform .08s ease, background .15s ease;
+    transition: transform .08s ease, background .15s ease, border-color .15s ease;
   }
   button:active { transform: scale(0.97); }
   .btn-primary { background: var(--green); color: #fff; }
   .btn-primary:hover { background: var(--green-dark); }
-  .btn-secondary { background: #fff; color: var(--green-dark); border: 1.5px solid var(--line); }
+  .btn-secondary { background: #fff; color: var(--text); border: 1.5px solid var(--line); }
   .btn-secondary:hover { border-color: var(--green); }
 
+  .mwst-toggle {
+    display: flex;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+  }
+  .mwst-toggle button {
+    background: transparent;
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .mwst-toggle button.active { background: var(--green); color: #fff; }
+
+  /* ============ Beleg-Karten ============ */
   .card {
     background: #fff;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: var(--radius);
     padding: 18px 20px 16px;
     margin-bottom: 14px;
-    box-shadow: 0 1px 2px rgba(47,93,47,0.04);
-    position: relative;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
   .card-top {
     display: flex;
@@ -83,121 +108,128 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--green-dark);
+    background: var(--green);
     color: #fff;
     font-weight: 700;
     font-size: 12.5px;
-    padding: 5px 12px 5px 10px;
+    padding: 5px 12px;
     border-radius: 999px;
   }
-  .beleg-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
-
   .del {
     background: none;
     border: none;
-    color: #B94A3B;
+    color: var(--danger);
     font-size: 12.5px;
     font-weight: 600;
-    padding: 4px 6px;
-    cursor: pointer;
+    padding: 4px 8px;
     border-radius: 6px;
   }
   .del:hover { background: #fdeceb; }
 
+  /* ============ Formular-Grid ============ */
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px 16px;
   }
-  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
   .field.span2 { grid-column: span 2; }
+  .field.span4 { grid-column: span 4; }
   label {
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  input, select {
+  input, textarea {
     font-family: inherit;
     border: 1.5px solid var(--line);
     border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 13.5px;
+    padding: 9px 10px;
+    font-size: 14px;
     color: var(--text);
-    background: var(--cream);
+    background: var(--bg);
     width: 100%;
   }
-  input:focus, select:focus {
+  input:focus, textarea:focus {
     outline: none;
     border-color: var(--green);
     background: #fff;
   }
+  textarea { resize: vertical; min-height: 44px; }
   .num { text-align: right; }
   .check-field {
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    padding-top: 20px;
+    align-self: end;
+    padding-bottom: 8px;
   }
   input[type=checkbox] {
-    width: 17px; height: 17px; accent-color: var(--green); cursor: pointer;
+    width: 18px; height: 18px;
+    accent-color: var(--green);
+    cursor: pointer;
+    flex: none;
   }
-  .check-field label { text-transform: none; font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: 0; }
+  .check-field label {
+    text-transform: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0;
+    cursor: pointer;
+  }
 
+  /* ============ Summen ============ */
   .summary {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    gap: 14px;
+    gap: 32px;
     background: #fff;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: var(--radius);
     padding: 16px 20px;
     margin-top: 6px;
   }
-  .summary .label { font-size: 13px; font-weight: 600; color: var(--muted); }
-  .summary .value { font-size: 22px; font-weight: 800; color: var(--green-dark); }
+  .sum-block { text-align: right; }
+  .sum-block .label { font-size: 12px; font-weight: 600; color: var(--muted); display: block; margin-bottom: 2px; }
+  .sum-block .value { font-size: 19px; font-weight: 800; }
+  .sum-block .value.main { font-size: 22px; color: var(--green-dark); }
 
+  /* ============ Leerer Zustand ============ */
   .empty {
     text-align: center;
     color: var(--muted);
     font-size: 13.5px;
     padding: 40px 0;
     border: 1.5px dashed var(--line);
-    border-radius: 14px;
+    border-radius: var(--radius);
   }
 
+  /* ============ Senden-Box ============ */
   .send-box {
     background: #fff;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: var(--radius);
     padding: 18px 20px;
     margin-top: 14px;
   }
-  .send-box h2 {
-    font-size: 14px;
-    font-weight: 800;
-    color: var(--green-dark);
-    margin: 0 0 10px;
-  }
-  #summaryList {
-    font-size: 12.5px;
-    color: var(--text);
-    margin: 0 0 14px;
-    padding: 0;
-    list-style: none;
-  }
+  .send-box h2 { font-size: 14px; font-weight: 800; margin: 0 0 10px; }
+  #summaryList { font-size: 13px; margin: 0 0 14px; padding: 0; list-style: none; }
   #summaryList li {
-    padding: 6px 0;
+    padding: 7px 0;
     border-bottom: 1px solid var(--line);
     display: flex;
     justify-content: space-between;
     gap: 10px;
   }
   #summaryList li:last-child { border-bottom: none; }
-  #summaryList .s-desc { color: var(--muted); }
-  #summaryList .s-price { font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+  #summaryList .s-desc { color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  #summaryList .s-price { font-weight: 700; white-space: nowrap; }
   .send-row {
     display: flex;
     align-items: center;
@@ -205,40 +237,77 @@
     flex-wrap: wrap;
     gap: 10px;
   }
-  .send-row .to {
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .send-row .to { font-size: 12.5px; color: var(--muted); }
   .send-row .to b { color: var(--text); }
 
+  /* ============ Mobil ============ */
   @media (max-width: 820px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
-    .field.span2 { grid-column: span 2; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .field.span4 { grid-column: span 2; }
+  }
+  @media (max-width: 600px) {
+    body { padding: 16px 12px; }
+    .head { flex-direction: column; align-items: stretch; }
+    .brand { justify-content: flex-start; }
+    .brand img { height: 36px; }
+    .toolbar > button { flex: 1; }
+    .mwst-toggle { width: 100%; }
+    .mwst-toggle button { flex: 1; }
+    .card { padding: 16px 14px 14px; }
+    .grid { grid-template-columns: 1fr; gap: 12px; }
+    .field.span2, .field.span4 { grid-column: span 1; }
+    .check-field { align-self: start; padding-bottom: 0; }
+    .summary { flex-wrap: wrap; gap: 14px 24px; justify-content: space-between; }
+    .sum-block { text-align: left; }
+    .send-row { flex-direction: column; align-items: stretch; }
+    .send-row button { width: 100%; }
+    input, textarea { font-size: 16px; } /* verhindert iOS-Auto-Zoom */
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- Kopf mit MR-Logo -->
   <div class="head">
-    <div>
-      <h1>Belegerfassung</h1>
-      <span>Maschinenring &middot; laufende Erfassung</span>
+    <div class="brand">
+      <img src="https://www.maschinenring.de/static/mrlogo-846f66d5fc8a74438b0c4adcbd85c631.svg"
+           alt="Maschinenring" onerror="this.style.display='none'">
+      <h1>Belegerfassung
+        <span>Maschinenring &middot; laufende Erfassung</span>
+      </h1>
     </div>
     <div class="toolbar">
+      <div class="mwst-toggle">
+        <button type="button" id="btn-netto" class="active" onclick="setMode('netto')">Netto</button>
+        <button type="button" id="btn-brutto" onclick="setMode('brutto')">Brutto</button>
+      </div>
       <button class="btn-secondary" onclick="exportCSV()">CSV exportieren</button>
       <button class="btn-primary" onclick="addBeleg()">+ Neuer Beleg</button>
     </div>
   </div>
 
+  <!-- Beleg-Liste -->
   <div id="list"></div>
   <div id="emptyState" class="empty" style="display:none;">Noch kein Beleg erfasst — leg mit „+ Neuer Beleg" los.</div>
 
+  <!-- Summen -->
   <div class="summary">
-    <span class="label">Gesamtsumme</span>
-    <span class="value" id="gesamtsumme">0,00 €</span>
+    <div class="sum-block">
+      <span class="label">Nettosumme</span>
+      <span class="value" id="nettosumme">0,00 €</span>
+    </div>
+    <div class="sum-block">
+      <span class="label">MwSt. (19%)</span>
+      <span class="value" id="mwstsumme">0,00 €</span>
+    </div>
+    <div class="sum-block">
+      <span class="label">Bruttosumme</span>
+      <span class="value main" id="bruttosumme">0,00 €</span>
+    </div>
   </div>
 
+  <!-- Zusammenfassung & Senden -->
   <div class="send-box">
     <h2>Zusammenfassung</h2>
     <ul id="summaryList"></ul>
@@ -251,17 +320,71 @@
 </div>
 
 <script>
-let counter = 0;
+'use strict';
 
+/* ============ Konfiguration ============ */
+const MAIL_TO = 'info@mr-starnberg.de';
+const MWST = 0.19;
+
+/* ============ Zustand ============ */
+let uidCounter = 0;          // eindeutige IDs für Checkbox-Labels
+let mode = 'netto';          // 'netto' | 'brutto'
+
+/* ============ Hilfsfunktionen ============ */
+const $  = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+function fmtEUR(v) {
+  return (parseFloat(v) || 0).toLocaleString('de-DE', {
+    minimumFractionDigits: 2, maximumFractionDigits: 2
+  }) + ' €';
+}
+
+function modeLabel() { return mode === 'netto' ? 'Netto' : 'Brutto'; }
+
+function nettoBrutto(sum) {
+  if (mode === 'netto') return { netto: sum, brutto: sum * (1 + MWST) };
+  return { netto: sum / (1 + MWST), brutto: sum };
+}
+
+/* Liest alle Werte eines Belegs aus */
+function readCard(card, i) {
+  return {
+    nr: i + 1,
+    ag: card.querySelector('.ag').value,
+    an: card.querySelector('.an').value,
+    datum: card.querySelector('.datum').value,
+    vskz: card.querySelector('.vskz').value,
+    leistung: card.querySelector('.leistung').value,
+    umfang: card.querySelector('.umfang').value,
+    einzelpreis: card.querySelector('.einzelpreis').value,
+    gesamtpreis: parseFloat(card.querySelector('.gesamtpreis').value) || 0,
+    agtank: card.querySelector('.agtank').checked,
+    bemerkung: card.querySelector('.bemerkung').value
+  };
+}
+
+/* ============ Netto/Brutto-Umschalter ============ */
+function setMode(newMode) {
+  mode = newMode;
+  $('#btn-netto').classList.toggle('active', mode === 'netto');
+  $('#btn-brutto').classList.toggle('active', mode === 'brutto');
+  const s = `(${modeLabel()})`;
+  $$('.lbl-einzelpreis').forEach(l => l.textContent = `Einzelpreis ${s} €`);
+  $$('.lbl-gesamtpreis').forEach(l => l.textContent = `Gesamtpreis ${s} €`);
+  refresh();
+}
+
+/* ============ Belege anlegen / löschen ============ */
 function addBeleg() {
-  counter++;
-  const list = document.getElementById('list');
+  uidCounter++;
+  const nr = $$('.card').length + 1;
+  const s = `(${modeLabel()})`;
   const card = document.createElement('div');
   card.className = 'card';
-  card.dataset.id = counter;
   card.innerHTML = `
     <div class="card-top">
-      <span class="beleg-badge"><span class="dot"></span>Beleg Nr. ${counter}</span>
+      <span class="beleg-badge">Beleg Nr. <span class="beleg-nr">${nr}</span></span>
       <button class="del" onclick="delCard(this)">Löschen ✕</button>
     </div>
     <div class="grid">
@@ -287,26 +410,40 @@ function addBeleg() {
       </div>
       <div class="field">
         <label>Umfang</label>
-        <input type="number" step="0.01" class="umfang" oninput="calc(this)" placeholder="Menge / Std.">
+        <input type="number" step="0.01" min="0" class="umfang" oninput="calc(this)" placeholder="Menge / Std.">
       </div>
       <div class="field">
-        <label>Einzelpreis (€)</label>
-        <input type="number" step="0.01" class="einzelpreis num" oninput="calc(this)" placeholder="0,00">
+        <label class="lbl-einzelpreis">Einzelpreis ${s} €</label>
+        <input type="number" step="0.01" min="0" class="einzelpreis num" oninput="calc(this)" placeholder="0,00">
       </div>
       <div class="field">
-        <label>Gesamtpreis (€)</label>
-        <input type="number" step="0.01" class="gesamtpreis num" oninput="calcBack(this)" placeholder="0,00">
+        <label class="lbl-gesamtpreis">Gesamtpreis ${s} €</label>
+        <input type="number" step="0.01" min="0" class="gesamtpreis num" oninput="calcBack(this)" placeholder="0,00">
       </div>
       <div class="field check-field">
-        <input type="checkbox" class="agtank" id="agtank-${counter}">
-        <label for="agtank-${counter}">AG getankt</label>
+        <input type="checkbox" class="agtank" id="agtank-${uidCounter}">
+        <label for="agtank-${uidCounter}">AG getankt</label>
       </div>
-    </div>
-  `;
-  list.appendChild(card);
-  updateEmptyState();
+      <div class="field span4">
+        <label>Bemerkung</label>
+        <textarea class="bemerkung" placeholder="Zusätzliche Hinweise ..."></textarea>
+      </div>
+    </div>`;
+  $('#list').appendChild(card);
+  refresh();
 }
 
+function delCard(btn) {
+  btn.closest('.card').remove();
+  renumber();
+  refresh();
+}
+
+function renumber() {
+  $$('.card .beleg-nr').forEach((el, i) => el.textContent = i + 1);
+}
+
+/* ============ Preisberechnung ============ */
 function calc(el) {
   const card = el.closest('.card');
   const umfang = parseFloat(card.querySelector('.umfang').value) || 0;
@@ -314,7 +451,7 @@ function calc(el) {
   if (umfang && einzel) {
     card.querySelector('.gesamtpreis').value = (umfang * einzel).toFixed(2);
   }
-  updateSum();
+  refresh();
 }
 
 function calcBack(el) {
@@ -324,110 +461,106 @@ function calcBack(el) {
   if (umfang && gesamt) {
     card.querySelector('.einzelpreis').value = (gesamt / umfang).toFixed(2);
   }
-  updateSum();
+  refresh();
 }
 
-function updateSum() {
+/* ============ Anzeige aktualisieren ============ */
+function refresh() {
+  const cards = $$('.card');
+  $('#emptyState').style.display = cards.length ? 'none' : 'block';
+
   let sum = 0;
-  document.querySelectorAll('.gesamtpreis').forEach(f => sum += parseFloat(f.value) || 0);
-  document.getElementById('gesamtsumme').textContent =
-    sum.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
-  updateSummaryList();
-}
+  cards.forEach(c => sum += parseFloat(c.querySelector('.gesamtpreis').value) || 0);
+  const { netto, brutto } = nettoBrutto(sum);
 
-function fmtEUR(v) {
-  return (parseFloat(v) || 0).toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
-}
+  $('#nettosumme').textContent = fmtEUR(netto);
+  $('#mwstsumme').textContent = fmtEUR(brutto - netto);
+  $('#bruttosumme').textContent = fmtEUR(brutto);
 
-function updateSummaryList() {
-  const list = document.getElementById('summaryList');
+  const list = $('#summaryList');
   list.innerHTML = '';
-  document.querySelectorAll('.card').forEach(card => {
-    const nr = card.querySelector('.beleg-badge').textContent.replace('Beleg Nr. ', '');
-    const ag = card.querySelector('.ag').value || '–';
-    const an = card.querySelector('.an').value || '–';
-    const leistung = card.querySelector('.leistung').value || '–';
-    const gesamt = card.querySelector('.gesamtpreis').value;
+  cards.forEach((card, i) => {
+    const b = readCard(card, i);
     const li = document.createElement('li');
-    li.innerHTML = `<span class="s-desc">#${nr} · ${ag} → ${an} · ${leistung}</span><span class="s-price">${fmtEUR(gesamt)}</span>`;
+    li.innerHTML =
+      `<span class="s-desc">#${b.nr} · ${b.ag || '–'} → ${b.an || '–'} · ${b.leistung || '–'}</span>` +
+      `<span class="s-price">${fmtEUR(b.gesamtpreis)}</span>`;
     list.appendChild(li);
   });
 }
 
+/* ============ E-Mail-Versand ============ */
 function sendMail() {
-  const cards = document.querySelectorAll('.card');
-  if (cards.length === 0) {
-    alert('Es sind noch keine Belege erfasst.');
-    return;
-  }
-  let body = 'Belegübersicht Maschinenring\n\n';
-  let gesamt = 0;
-  cards.forEach(card => {
-    const nr = card.querySelector('.beleg-badge').textContent.replace('Beleg Nr. ', '');
-    const ag = card.querySelector('.ag').value || '-';
-    const an = card.querySelector('.an').value || '-';
-    const datum = card.querySelector('.datum').value || '-';
-    const vskz = card.querySelector('.vskz').value || '-';
-    const leistung = card.querySelector('.leistung').value || '-';
-    const umfang = card.querySelector('.umfang').value || '-';
-    const einzel = card.querySelector('.einzelpreis').value;
-    const preis = parseFloat(card.querySelector('.gesamtpreis').value) || 0;
-    const agtank = card.querySelector('.agtank').checked ? 'ja' : 'nein';
-    gesamt += preis;
-    body += `Beleg Nr. ${nr}\n`;
-    body += `Auftraggeber (AG): ${ag}\n`;
-    body += `Auftragnehmer (AN): ${an}\n`;
-    body += `Leistungsdatum: ${datum}\n`;
-    body += `VSKZ-Nr.: ${vskz}\n`;
-    body += `Leistung: ${leistung}\n`;
-    body += `Umfang: ${umfang}\n`;
-    body += `Einzelpreis: ${fmtEUR(einzel)}\n`;
-    body += `Gesamtpreis: ${fmtEUR(preis)}\n`;
-    body += `AG getankt: ${agtank}\n\n`;
+  const cards = $$('.card');
+  if (!cards.length) { alert('Es sind noch keine Belege erfasst.'); return; }
+
+  let body = `Belegübersicht Maschinenring (Preise: ${modeLabel()})\n\n`;
+  let sum = 0;
+
+  cards.forEach((card, i) => {
+    const b = readCard(card, i);
+    sum += b.gesamtpreis;
+    body += `Beleg Nr. ${b.nr}\n`
+          + `Auftraggeber (AG): ${b.ag || '-'}\n`
+          + `Auftragnehmer (AN): ${b.an || '-'}\n`
+          + `Leistungsdatum: ${b.datum || '-'}\n`
+          + `VSKZ-Nr.: ${b.vskz || '-'}\n`
+          + `Leistung: ${b.leistung || '-'}\n`
+          + `Umfang: ${b.umfang || '-'}\n`
+          + `Einzelpreis (${modeLabel()}): ${fmtEUR(b.einzelpreis)}\n`
+          + `Gesamtpreis (${modeLabel()}): ${fmtEUR(b.gesamtpreis)}\n`
+          + `AG getankt: ${b.agtank ? 'ja' : 'nein'}\n`
+          + `Bemerkung: ${b.bemerkung || '-'}\n\n`;
   });
-  body += `Gesamtsumme: ${fmtEUR(gesamt)}\n`;
+
+  const { netto, brutto } = nettoBrutto(sum);
+  body += `Nettosumme: ${fmtEUR(netto)}\n`
+        + `MwSt. (19%): ${fmtEUR(brutto - netto)}\n`
+        + `Bruttosumme: ${fmtEUR(brutto)}\n`;
 
   const subject = encodeURIComponent('Belegübersicht Maschinenring');
-  const mailto = `mailto:info@mr-starnberg.de?subject=${subject}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
+  window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${encodeURIComponent(body)}`;
 }
 
-function delCard(btn) {
-  btn.closest('.card').remove();
-  updateSum();
-  updateEmptyState();
-}
-
-function updateEmptyState() {
-  const has = document.querySelectorAll('.card').length > 0;
-  document.getElementById('emptyState').style.display = has ? 'none' : 'block';
-}
-
+/* ============ CSV-Export ============ */
 function exportCSV() {
-  const rows = [['Beleg-Nr','Auftraggeber (AG)','Auftragnehmer (AN)','Leistungsdatum','VSKZ-Nr','Leistung','Umfang','Einzelpreis','Gesamtpreis','AG getankt']];
-  document.querySelectorAll('.card').forEach(card => {
-    rows.push([
-      card.querySelector('.beleg-badge').textContent.replace('Beleg Nr. ', ''),
-      card.querySelector('.ag').value,
-      card.querySelector('.an').value,
-      card.querySelector('.datum').value,
-      card.querySelector('.vskz').value,
-      card.querySelector('.leistung').value,
-      card.querySelector('.umfang').value,
-      card.querySelector('.einzelpreis').value,
-      card.querySelector('.gesamtpreis').value,
-      card.querySelector('.agtank').checked ? 'ja' : 'nein'
-    ]);
+  const cards = $$('.card');
+  const ml = modeLabel();
+  const rows = [[
+    'Beleg-Nr','Auftraggeber (AG)','Auftragnehmer (AN)','Leistungsdatum','VSKZ-Nr',
+    'Leistung','Umfang',`Einzelpreis (${ml})`,`Gesamtpreis (${ml})`,'AG getankt','Bemerkung'
+  ]];
+
+  let sum = 0;
+  cards.forEach((card, i) => {
+    const b = readCard(card, i);
+    sum += b.gesamtpreis;
+    rows.push([b.nr, b.ag, b.an, b.datum, b.vskz, b.leistung, b.umfang,
+               b.einzelpreis, b.gesamtpreis, b.agtank ? 'ja' : 'nein', b.bemerkung]);
   });
-  const csv = rows.map(r => r.map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(';')).join('\n');
-  const blob = new Blob(['\ufeff' + csv], {type:'text/csv;charset=utf-8;'});
+
+  const { netto, brutto } = nettoBrutto(sum);
+  rows.push([]);
+  rows.push(['','','','','','','','','Nettosumme', fmtEUR(netto)]);
+  rows.push(['','','','','','','','','MwSt. (19%)', fmtEUR(brutto - netto)]);
+  rows.push(['','','','','','','','','Bruttosumme', fmtEUR(brutto)]);
+
+  const csv = rows.map(r =>
+    r.map(v => `"${(v ?? '').toString().replace(/"/g, '""')}"`).join(';')
+  ).join('\n');
+
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'belege.csv';
   link.click();
+  URL.revokeObjectURL(link.href);
 }
 
+/* ============ Start ============ */
 addBeleg();
 </script>
 </body>
+</html>
+
 </html>
